@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; 
+                 script-src 'self' https://cdnjs.cloudflare.com 'sha256-vvt4KWwuNr51XfE5m+hzeNEGhiOfZzG97ccfqGsPwvE=' 'sha256-4r0DdS4xJS2GKAKf6P1HUHsNY+QTXzqxBh1r8KdT6g8='; 
+                 style-src 'self' https://cdnjs.cloudflare.com; 
+                 font-src 'self' https://cdnjs.cloudflare.com; 
+                 img-src 'self' data:;
+                 connect-src 'none';
+                 form-action 'none';
+                 frame-ancestors 'none';
+                 object-src 'none';
+                 base-uri 'self';
+                 upgrade-insecure-requests;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Referrer-Policy" content="no-referrer-when-downgrade">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta name="keywords"
+        content="password strength checker, password entropy calculator, password security tester, crack time estimator, password risk assessment, password vulnerability test, password audit tool, password strength meter, secure password tester, password security analysis, password crack time predictor, password randomness checker, password safety evaluation">
+    <meta name="description"
+        content="Analyze password strength with our security tool. Get real-time crack-time estimates, entropy scores, and risk evaluations. 100% secure, client-side processing. Improve protection with our password vulnerability tester." />
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Password Security Checker | Advanced Password Analysis Tool">
+    <meta property="og:description"
+        content="Analyze password strength with our advanced security tool. Features real-time analysis, entropy calculation, and expert security tips.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://passmetrics.pages.dev/logo.png">
+    <meta property="og:url" content="https://passmetrics.pages.dev">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Password Security Checker | Advanced Password Analysis Tool">
+    <meta name="twitter:description"
+        content="Analyze password strength with our advanced security tool. Features real-time analysis, entropy calculation, and expert security tips.">
+    <meta name="twitter:image" content="https://passmetrics.pages.dev/logo.png">
+    <title>Password Strength Checker & Security Tester | Entropy Calculator & Crack Time Estimator</title>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Fix preload integrity issues by matching the integrity values with the actual resources -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js" as="script" 
+          crossorigin="anonymous" 
+          integrity="sha512-TZlMGFY9xKj38t/5m2FzJ+RM/aD5alMHDe26p0mYUMoCF5G7ibfHUQILq0qQPV3wlsnCwL+TPRNK4vIWGLOkUQ==">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" 
+          crossorigin="anonymous" 
+          integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==">
+    
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="icon" type="image/png" href="./logo.png">
+    <!-- Note: theme-color is not supported by Firefox but provides color theming in other browsers -->
+    <meta name="theme-color" content="#2c3e50">
+    
+    <!-- Prevent drag and drop file uploads for security -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.addEventListener("dragover", function(event) { event.preventDefault(); });
+            document.addEventListener("drop", function(event) { event.preventDefault(); });
+        });
+    </script>
+</head>
+
+<body>
+    <a href="#main-content" class="skip-to-content">Skip to content</a>
+    <nav class="site-header" aria-label="Main navigation">
+        <div class="header-container">
+            <div class="site-branding">
+                <a href="#" aria-label="PassMetrics Home">
+                    <div class="logo-container">
+                        <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                    </div>
+                    <span>PassMetrics</span>
+                </a>
+            </div>
+            <ul class="main-navigation">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#security-tips">Security Tips</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li>
+                    <button type="button" id="theme-toggle" class="theme-toggle-button"
+                        aria-label="Toggle between light and dark theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <main id="main-content">
+        <section class="hero-section">
+            <h1 class="hero-title">Advanced Password Security Checker</h1>
+            <p class="hero-description">Analyze and strengthen your password security</p>
+        </section>
+        <section class="password-checker-container">
+            <h2 class="section-title">Test Your Password Security</h2>
+            <div class="password-input-container">
+                <label for="password">Enter Password</label>
+                <div class="password-field">
+                    <input type="password" id="password" aria-label="Password input field"
+                        spellcheck="false" data-lpignore="true" placeholder="Type your password here"
+                        autocomplete="new-password" autocorrect="off">
+                    <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <div class="input-hint">
+                    <i class="fas fa-info-circle"></i> Enter any password to analyze its strength and vulnerabilities
+                </div>
+            </div>
+
+            <div class="security-notice">
+                <i class="fas fa-shield-alt"></i>
+                <span>Your password is processed entirely in your browser and is never transmitted or stored.</span>
+            </div>
+
+            <div class="strength-meter">
+                <div class="meter-bar">
+                    <div class="meter-fill" role="progressbar" aria-label="Password strength indicator" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="strength-text">
+                    Password Strength: 
+                    <span>Not rated</span>
+                    <div class="tooltip-container strength-tooltip-container">
+                        <i class="fas fa-info-circle"></i>
+                        <div class="custom-tooltip strength-tooltip">
+                            <p>Password strength is evaluated based on multiple factors:</p>
+                            <ul>
+                                <li><strong>Very Weak:</strong> Easily cracked, high risk</li>
+                                <li><strong>Weak:</strong> Simple patterns, vulnerable</li>
+                                <li><strong>Moderate:</strong> Better but still improvable</li>
+                                <li><strong>Strong:</strong> Good security for most uses</li>
+                                <li><strong>Very Strong:</strong> Excellent protection</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detailed-analysis">
+                <div class="metrics-row">
+                    <div class="metric-card">
+                        <i class="fas fa-stopwatch"></i>
+                        <div class="metric-details">
+                            <span class="metric-label">Time to crack:</span>
+                            <strong class="metric-value">Not calculated</strong>
+                            <small class="metric-context">Using standard desktop computer</small>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <i class="fas fa-random"></i>
+                        <div class="metric-details">
+                            <span class="metric-label">Entropy Score:</span>
+                            <strong class="metric-value">0 bits</strong>
+                            <div class="tooltip-container">
+                                <i class="fas fa-question-circle"></i>
+                                <div class="custom-tooltip entropy-tooltip">
+                                    <p>Entropy measures password randomness. Higher is better.</p>
+                                    <ul>
+                                        <li><strong>&lt; 40 bits:</strong> Very weak</li>
+                                        <li><strong>40-60 bits:</strong> Moderate</li>
+                                        <li><strong>60-80 bits:</strong> Strong</li>
+                                        <li><strong>&gt; 80 bits:</strong> Very strong</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="requirements">
+                    <div class="req-item" data-requirement="length">
+                        <i class="fas fa-circle"></i>
+                        <span>12+ characters</span>
+                    </div>
+                    <div class="req-item" data-requirement="uppercase">
+                        <i class="fas fa-circle"></i>
+                        <span>Uppercase</span>
+                    </div>
+                    <div class="req-item" data-requirement="lowercase">
+                        <i class="fas fa-circle"></i>
+                        <span>Lowercase</span>
+                    </div>
+                    <div class="req-item" data-requirement="numbers">
+                        <i class="fas fa-circle"></i>
+                        <span>Number</span>
+                    </div>
+                    <div class="req-item" data-requirement="symbols">
+                        <i class="fas fa-circle"></i>
+                        <span>Special character</span>
+                    </div>
+                </div>
+                
+                <div class="feedback-text">
+                    Enter a password to see analysis and recommendations.
+                </div>
+            </div>
+        </section>
+        <section id="features" class="features-section">
+            <h2 class="features-section-heading">Why Choose Our Tool?</h2>
+            <div class="feature-card-grid">
+                <div class="feature-card animated-card">
+                    <i class="fas fa-lock feature-card-icon"></i>
+                    <h3 class="feature-card-title">Military-Grade Analysis</h3>
+                    <p class="feature-card-description">Our tool uses advanced algorithms to analyze password strength
+                        based on multiple factors such as
+                        length, complexity, and entropy.</p>
+                </div>
+                <div class="feature-card animated-card">
+                    <i class="fas fa-shield-alt feature-card-icon"></i>
+                    <h3 class="feature-card-title">100% Secure</h3>
+                    <p class="feature-card-description">All password analysis is performed locally in your browser. Your
+                        password never leaves your
+                        device, ensuring complete privacy.</p>
+                </div>
+                <div class="feature-card animated-card">
+                    <i class="fas fa-chart-line feature-card-icon"></i>
+                    <h3 class="feature-card-title">Real-time Analysis</h3>
+                    <p class="feature-card-description">Get instant feedback as you type. Our tool provides detailed
+                        metrics like crack time and entropy
+                        score in real-time.</p>
+                </div>
+                <div class="feature-card animated-card">
+                    <i class="fas fa-lightbulb feature-card-icon"></i>
+                    <h3 class="feature-card-title">Expert Recommendations</h3>
+                    <p class="feature-card-description">We provide actionable tips to improve your password strength and
+                        protect against common
+                        vulnerabilities.</p>
+                </div>
+                <div class="feature-card animated-card">
+                    <i class="fas fa-bolt feature-card-icon"></i>
+                    <h3 class="feature-card-title">Fast & Efficient</h3>
+                    <p class="feature-card-description">Our tool is optimized for speed, providing instant results
+                        without compromising accuracy or
+                        security.</p>
+                </div>
+                <div class="feature-card animated-card">
+                    <i class="fas fa-user-shield feature-card-icon"></i>
+                    <h3 class="feature-card-title">User-Friendly Interface</h3>
+                    <p class="feature-card-description">Designed with simplicity in mind, our tool is easy to use for
+                        both beginners and advanced users.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <section id="security-tips" class="security-tips-section">
+            <h2 class="security-tips-title">Common Password Mistakes</h2>
+            <div class="tips-card-grid">
+                <div class="tip-card error-tip animated-card">
+                    <i class="fas fa-user-circle tip-card-icon"></i>
+                    <h3 class="tip-card-title">Using Personal Information</h3>
+                    <p class="tip-card-description">Avoid using birthdays, names, or other personal details in your passwords. Hackers can easily guess these.</p>
+                </div>
+                <div class="tip-card error-tip animated-card">
+                    <i class="fas fa-copy tip-card-icon"></i>
+                    <h3 class="tip-card-title">Avoid Password Reuse</h3>
+                    <p class="tip-card-description">Using the same password across multiple sites is dangerous. If one site is compromised, all your accounts are at risk.</p>
+                </div>
+                <div class="tip-card error-tip animated-card">
+                    <i class="fas fa-text-width tip-card-icon"></i>
+                    <h3 class="tip-card-title">Short Passwords</h3>
+                    <p class="tip-card-description">Short passwords are easily cracked. Length adds significant security to your passwords.</p>
+                </div>
+                <div class="tip-card error-tip animated-card">
+                    <i class="fas fa-mobile-alt tip-card-icon"></i>
+                    <h3 class="tip-card-title">Ignoring 2FA</h3>
+                    <p class="tip-card-description">Not using two-factor authentication when available leaves your accounts vulnerable even with strong passwords.</p>
+                </div>
+                <div class="tip-card error-tip animated-card">
+                    <i class="fas fa-brain tip-card-icon"></i>
+                    <h3 class="tip-card-title">Manual Password Management</h3>
+                    <p class="tip-card-description">Trying to remember all your passwords often leads to weak or reused passwords. Password managers solve this problem.</p>
+                </div>
+                <div class="tip-card error-tip animated-card">
+                    <i class="fas fa-book tip-card-icon"></i>
+                    <h3 class="tip-card-title">Dictionary Words</h3>
+                    <p class="tip-card-description">Using common dictionary words makes your password vulnerable to dictionary attacks. Even with modifications like replacing letters with numbers, these are easily cracked.</p>
+                </div>
+            </div>
+            
+            <div class="section-divider"></div>
+            <h2 class="security-tips-title">Creating Secure Passwords</h2>
+            <div class="tips-card-grid">
+                <div class="tip-card success-tip animated-card">
+                    <i class="fas fa-quote-right tip-card-icon"></i>
+                    <h3 class="tip-card-title">Use Passphrases</h3>
+                    <p class="tip-card-description">Create long, memorable phrases with random words, numbers, and symbols. For example: "PurpleTiger$2023!"</p>
+                </div>
+                
+                <div class="tip-card success-tip animated-card">
+                    <i class="fas fa-fingerprint tip-card-icon"></i>
+                    <h3 class="tip-card-title">Unique Passwords</h3>
+                    <p class="tip-card-description">Use different passwords for each account to minimize the impact of a single breach.</p>
+                </div>
+                
+                <div class="tip-card success-tip animated-card">
+                    <i class="fas fa-key tip-card-icon"></i>
+                    <h3 class="tip-card-title">Password Manager</h3>
+                    <p class="tip-card-description">Consider using a password manager to generate and store strong, unique passwords securely.</p>
+                </div>
+                
+                <div class="tip-card success-tip animated-card">
+                    <i class="fas fa-shield-alt tip-card-icon"></i>
+                    <h3 class="tip-card-title">Enable 2FA</h3>
+                    <p class="tip-card-description">Add an extra layer of security by enabling two-factor authentication wherever possible. This protects your accounts even if your password is compromised.</p>
+                </div>
+                
+                <div class="tip-card success-tip animated-card">
+                    <i class="fas fa-sync tip-card-icon"></i>
+                    <h3 class="tip-card-title">Regularly Update Passwords</h3>
+                    <p class="tip-card-description">Change your passwords periodically to reduce the risk of long-term exposure.</p>
+                </div>
+                
+                <div class="tip-card success-tip animated-card">
+                    <i class="fas fa-random tip-card-icon"></i>
+                    <h3 class="tip-card-title">Avoid Predictable Substitutions</h3>
+                    <p class="tip-card-description">Instead of replacing "o" with "0" or "a" with "@", use truly random combinations to make your password harder to guess.</p>
+                </div>
+            </div>
+        </section>
+        <section id="faq" class="faq-section">
+            <h2 class="faq-section-heading">General FAQ - Password Security & Protection</h2>
+            <div class="faq-items-container">
+                <div class="faq-item animated-card">
+                    <h3 class="faq-question">What is password entropy, and why is it important?</h3>
+                    <p class="faq-answer">Password entropy measures the randomness and complexity of your password. A higher entropy
+                        score means your password is more secure and harder for attackers to guess using brute-force
+                        methods. It is essential to increase your password's entropy to protect against potential
+                        breaches. You can use an <strong>entropy password calculator</strong> or <strong>password
+                            entropy tester</strong> to measure your password's strength.</p>
+                </div>
+                
+                <div class="faq-item animated-card">
+                    <h3 class="faq-question">How can I create a strong password?</h3>
+                    <p class="faq-answer">A strong password should be long (12+ characters) and include a mix of uppercase letters,
+                        lowercase letters, numbers, and special characters. Avoid using easily guessable information
+                        such as names, birthdays, or common words. Consider using a <strong>password strength tester
+                            tool</strong> to check your password's security before using it.</p>
+                </div>
+                
+                <div class="faq-item animated-card">
+                    <h3 class="faq-question">How do I check my password's strength?</h3>
+                    <p class="faq-answer">You can use an <strong>online password strength checker</strong> to instantly analyze the
+                        strength of your password. The tool provides an estimation of how long it would take to
+                        crack your password and gives feedback on its entropy and overall security. For enhanced
+                        security, use the <strong>password strength checker tool</strong> integrated with entropy
+                        tests.</p>
+                </div>
+                
+                <div class="faq-item animated-card">
+                    <h3 class="faq-question">Why is two-factor authentication (2FA) important?</h3>
+                    <p class="faq-answer"><strong>Two-factor authentication (2FA)</strong> adds an extra layer of security by requiring
+                        a second form of verification (such as a code sent to your phone or email) in addition to
+                        your password. This significantly reduces the risk of unauthorized access, even if your
+                        password is compromised.</p>
+                </div>
+                
+                <div class="faq-item animated-card">
+                    <h3 class="faq-question">Should I use a password manager?</h3>
+                    <p class="faq-answer">Yes, a <strong>password manager</strong> helps you securely store and manage your passwords.
+                        It generates strong, unique passwords for each account and saves you from remembering them,
+                        all while keeping your data encrypted and safe. Many password managers also include a
+                        <strong>password security checker</strong> to evaluate your existing passwords.</p>
+                </div>
+                
+                <div class="faq-item animated-card">
+                    <h3 class="faq-question">How long does it take to crack a password?</h3>
+                    <p class="faq-answer">The time to crack a password depends on its length and complexity. Short passwords with
+                        simple patterns can be cracked instantly, while long, complex passwords may take years or
+                        even centuries to break. Use a <strong>password strength tester</strong> to estimate the
+                        crack time based on your password's strength.</p>
+                </div>
+                
+                <div class="faq-item animated-card">
+                    <h3 class="faq-question">Can a password be too long?</h3>
+                    <p class="faq-answer">While there is no such thing as a password being "too long" for security, excessively long
+                        passwords may be impractical. Generally, a password length of 12-16 characters is ideal for
+                        balancing security and usability. For critical accounts, always use a <strong>password
+                            entropy calculator</strong> to verify password security.</p>
+                </div>
+                
+                <div class="faq-item animated-card">
+                    <h3 class="faq-question">How often should I update my passwords?</h3>
+                    <p class="faq-answer">It's a good practice to update passwords every 3-6 months, or sooner if you suspect any
+                        account may have been compromised. Regularly changing passwords minimizes the risk of
+                        unauthorized access. You can check your <strong>password strength</strong> and entropy every
+                        time you update it using a <strong>password security checker</strong>.</p>
+                </div>
+                
+                <div class="faq-item animated-card">
+                    <h3 class="faq-question">How can I protect myself from phishing attacks?</h3>
+                    <p class="faq-answer">Phishing attacks often trick users into revealing their passwords or personal information. To
+                        protect yourself, avoid clicking on suspicious links, ensure the website's URL starts with
+                        "https", and use a <strong>password manager</strong> to prevent entering passwords on fake
+                        sites. Consider using a <strong>password entropy tester</strong> to check your passwords for
+                        extra security.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section about-section">
+                <div class="footer-logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>PassMetrics</h3>
+                </div>
+                <p class="footer-tagline">Advanced password security analysis for everyone</p>
+                <ul class="footer-section-list">
+                    <li><i class="fas fa-check-circle"></i> Real-time strength assessment</li>
+                    <li><i class="fas fa-check-circle"></i> Detailed security feedback</li>
+                    <li><i class="fas fa-check-circle"></i> 100% client-side processing</li>
+                    <li><i class="fas fa-check-circle"></i> No data storage or transmission</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul class="footer-section-list">
+                    <li><a href="#" id="terms-link" class="footer-link"><i class="fas fa-angle-right"></i> Terms & Conditions</a></li>
+                    <li><a href="#" id="privacy-link" class="footer-link"><i class="fas fa-angle-right"></i> Privacy Policy</a></li>
+                    <li><a href="#" id="cookie-link" class="footer-link"><i class="fas fa-angle-right"></i> Cookie Policy</a></li>
+                    <li><a href="#" id="disclaimer-link" class="footer-link"><i class="fas fa-angle-right"></i> Disclaimer</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Our Security Commitment</h4>
+                <div class="security-commitment">
+                    <ul class="security-features-list">
+                        <li>
+                            <i class="fas fa-lock"></i>
+                            <span><strong>100% Client-Side Processing</strong> - Your passwords never leave your device</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-ban"></i>
+                            <span><strong>No Server Storage</strong> - We don't store or transmit your data</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-code"></i>
+                            <span><strong>Open Source</strong> - Our code is transparent and verifiable</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="social-icons">
+                    <a href="https://github.com/reyhanhussain/PassMetrics" target="_blank" rel="noopener noreferrer" class="social-icon" title="View Source Code"><i class="fab fa-github"></i></a>
+                    <a href="mailto:reyhanbgscet@outlook.com" rel="noopener noreferrer" class="social-icon" title="Email Us"><i class="fas fa-envelope"></i></a>
+                    <a href="https://www.linkedin.com/in/reyhanhussain" target="_blank" rel="noopener noreferrer" class="social-icon" title="Connect on LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="social-icon" title="Share on Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <p>&copy; 2024 PassMetrics. All rights reserved.</p>
+                <p class="footer-credit">Designed with <i class="fas fa-heart"></i> by Reyhan Hussain</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Terms & Conditions Modal -->
+    <div id="terms-modal" class="modal-dialog" role="dialog" aria-labelledby="terms-modal-title" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="terms-modal-title" class="modal-title">Terms & Conditions</h3>
+                <button type="button" class="modal-close-button" aria-label="Close terms and conditions">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4 class="modal-section-title">Acceptance of Terms</h4>
+                <p>By using PassMetrics, you agree to these Terms & Conditions. If you do not agree, please do not use this service.</p>
+                
+                <h4 class="modal-section-title">Use of Service</h4>
+                <p>PassMetrics is provided as a free service to help users evaluate password strength. The service is provided "as is" without any warranties.</p>
+                
+                <h4 class="modal-section-title">Password Security</h4>
+                <p>While we provide tools to evaluate password strength, we cannot guarantee the security of any password. We recommend using unique passwords for different services and enabling two-factor authentication when available.</p>
+                
+                <h4 class="modal-section-title">Limitations of Liability</h4>
+                <p>PassMetrics and its creators shall not be liable for any direct, indirect, incidental, special, consequential, or exemplary damages resulting from your use of the service.</p>
+                
+                <h4 class="modal-section-title">Modifications to Service</h4>
+                <p>We reserve the right to modify or discontinue the service at any time without notice.</p>
+                
+                <h4 class="modal-section-title">Changes to Terms</h4>
+                <p>We may update these terms from time to time. Continued use of the service after any such changes constitutes your acceptance of the new terms.</p>
+                
+                <p class="modal-last-updated">Last updated: May 2023</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Privacy Policy Modal -->
+    <div id="privacy-modal" class="modal-dialog" role="dialog" aria-labelledby="privacy-modal-title" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="privacy-modal-title" class="modal-title">Privacy Policy</h3>
+                <button type="button" class="modal-close-button" aria-label="Close privacy policy">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4 class="modal-section-title">Our Commitment to Privacy</h4>
+                <p>At PassMetrics, we take your privacy extremely seriously. Our password strength checker is designed with privacy as the top priority.</p>
+                
+                <h4 class="modal-section-title">How Our Tool Works</h4>
+                <p>All password analysis is performed entirely within your browser using JavaScript. Your password is never:</p>
+                <ul>
+                    <li>Transmitted over the internet</li>
+                    <li>Stored in any database</li>
+                    <li>Logged or recorded in any way</li>
+                    <li>Shared with any third parties</li>
+                </ul>
+                
+                <h4 class="modal-section-title">Data Collection</h4>
+                <p>PassMetrics does not collect any personal information. We do not use cookies, tracking pixels, or any other tracking technologies. We do not have access to any passwords you enter into our tool.</p>
+                
+                <h4 class="modal-section-title">Third-Party Libraries</h4>
+                <p>Our tool uses the following third-party libraries:</p>
+                <ul>
+                    <li>zxcvbn.js - A password strength estimator by Dropbox</li>
+                    <li>Font Awesome - For icons</li>
+                </ul>
+                <p>These libraries are loaded from CDNs but do not collect or transmit any of your data.</p>
+                
+                <h4 class="modal-section-title">Changes to This Policy</h4>
+                <p>We may update this privacy policy from time to time. Any changes will be reflected on this page.</p>
+                
+                <h4 class="modal-section-title">Contact Us</h4>
+                <p>If you have any questions about our privacy practices, please contact us at reyhanbgscet@outlook.com.</p>
+                
+                <p class="modal-last-updated">Last updated: May 2023</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Cookie Policy Modal -->
+    <div id="cookie-modal" class="modal-dialog" role="dialog" aria-labelledby="cookie-modal-title" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="cookie-modal-title" class="modal-title">Cookie Policy</h3>
+                <button type="button" class="modal-close-button" aria-label="Close cookie policy">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4 class="modal-section-title">No Cookies Used</h4>
+                <p>PassMetrics is designed with your privacy in mind. We do not use any cookies, tracking pixels, or similar technologies to collect or store information about you.</p>
+                
+                <h4 class="modal-section-title">Client-Side Processing</h4>
+                <p>All password analysis is performed entirely within your browser. We do not:</p>
+                <ul>
+                    <li>Store any session information</li>
+                    <li>Use cookies for tracking or analytics</li>
+                    <li>Employ any user identification mechanisms</li>
+                    <li>Utilize any server-side storage of user data</li>
+                </ul>
+                
+                <h4 class="modal-section-title">Third-Party Services</h4>
+                <p>We use CDN services to deliver certain resources like fonts and JavaScript libraries. These services may have their own cookie policies, but they do not receive any information about your password or usage of our tool.</p>
+                
+                <h4 class="modal-section-title">Local Storage</h4>
+                <p>We use minimal browser local storage only to remember your theme preference (light or dark mode). This information never leaves your device and is not used for tracking.</p>
+                
+                <h4 class="modal-section-title">Your Control</h4>
+                <p>Since we don't use cookies, there's nothing for you to manage or delete related to our service. Your browser's standard privacy controls are sufficient.</p>
+                
+                <h4 class="modal-section-title">Changes to This Policy</h4>
+                <p>We may update this cookie policy from time to time. Any changes will be reflected on this page.</p>
+                
+                <p class="modal-last-updated">Last updated: May 2024</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Disclaimer Modal -->
+    <div id="disclaimer-modal" class="modal-dialog" role="dialog" aria-labelledby="disclaimer-modal-title" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="disclaimer-modal-title" class="modal-title">Disclaimer</h3>
+                <button type="button" class="modal-close-button" aria-label="Close disclaimer">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4 class="modal-section-title">No Guarantees</h4>
+                <p>While PassMetrics strives to provide accurate password strength assessments, we cannot guarantee the absolute security of any password. The tool is provided "as is" without any warranties.</p>
+                
+                <h4 class="modal-section-title">Educational Purpose</h4>
+                <p>This tool is designed for educational purposes to help users understand password security principles. It should not be the sole factor in determining your security practices.</p>
+                
+                <h4 class="modal-section-title">Security Limitations</h4>
+                <p>Password strength is just one aspect of online security. Even strong passwords can be compromised through:</p>
+                <ul>
+                    <li>Data breaches of services you use</li>
+                    <li>Phishing attacks and social engineering</li>
+                    <li>Malware on your devices</li>
+                    <li>Shoulder surfing and physical observation</li>
+                </ul>
+                
+                <h4 class="modal-section-title">Best Practices</h4>
+                <p>We recommend implementing additional security measures such as:</p>
+                <ul>
+                    <li>Using a reputable password manager</li>
+                    <li>Enabling two-factor authentication when available</li>
+                    <li>Using unique passwords for each service</li>
+                    <li>Regularly updating critical passwords</li>
+                </ul>
+                
+                <h4 class="modal-section-title">No Liability</h4>
+                <p>The creators and maintainers of PassMetrics shall not be liable for any security breaches, data loss, or other damages resulting from reliance on this tool or its recommendations.</p>
+                
+                <p class="modal-last-updated">Last updated: May 2024</p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js" 
+        integrity="sha512-TZlMGFY9xKj38t/5m2FzJ+RM/aD5alMHDe26p0mYUMoCF5G7ibfHUQILq0qQPV3wlsnCwL+TPRNK4vIWGLOkUQ==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="script.js"></script>
+    <script src="schema.js"></script>
+</body>
+
+</html>
